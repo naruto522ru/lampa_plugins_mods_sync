@@ -116,7 +116,7 @@ jobs:
         LANG: en_US.UTF-8
         CHARSET: UTF-8
       run: |
-        bash -x bin/sync_script.sh
+        bash -x bin/sync_script.sh && dos2unix ./*
 
     - name: Commit sync plugin
       uses: stefanzweifel/git-auto-commit-action@v5
