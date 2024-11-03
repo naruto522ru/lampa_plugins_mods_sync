@@ -1,4 +1,4 @@
-//02.11.2024 - Fix
+//03.11.2024 - Fix
 
 (function () {
     'use strict';
@@ -2775,7 +2775,7 @@
           var IDENTIFIER = str.match(/var IDENTIFIER = "([^"]+)";/);
           var IMAGES_URL_SCRIPT = str.match(/<script[^>]*>([^<]*var IMAGES_URL = [^<]*)<\/script>/);
           var MOVIE_ID_SCRIPT = str.match(/<script[^>]*>([^<]*var MOVIE_ID = [^<]*)<\/script>/);
-          var MOVIE_URL = str.match(/<script src="([^"]*\/movie.js\?[^"]*)"/);
+          var MOVIE_URL = str.match(/<script src="([^"]*\/movie\.js\b[^"]*)"/);
 
           if (MOVIE_ID && PLAYER_CUID && IDENTIFIER && MOVIE_ID_SCRIPT && MOVIE_URL) {
             var SCRIPTS = IMAGES_URL_SCRIPT ? IMAGES_URL_SCRIPT.index > MOVIE_ID_SCRIPT.index ? [MOVIE_ID_SCRIPT[1], IMAGES_URL_SCRIPT[1]] : [IMAGES_URL_SCRIPT[1], MOVIE_ID_SCRIPT[1]] : [MOVIE_ID_SCRIPT[1], ''];
@@ -3041,9 +3041,10 @@
       var select_title = '';
       var prefer_http = Lampa.Storage.field('online_mod_prefer_http') === true;
       var prefer_dash = Lampa.Storage.field('online_mod_prefer_dash') === true;
-      var host = (prefer_http ? 'http:' : 'https:') + '//api.embess.ws';
+      var base = 'api.embess.ws';
+      var host = 'https://' + base;
       var ref = host + '/';
-      var embed = host + '/embed/';
+      var embed = (prefer_http ? 'http:' : 'https:') + '//' + base + '/embed/';
       var embed2 = (prefer_http ? 'http:' : 'https:') + '//api.kinogram.best/embed/';
       var prox = component.proxy('collaps');
 
@@ -16595,7 +16596,7 @@
       };
     }
 
-    var mod_version = '02.11.2024';
+    var mod_version = '03.11.2024';
     console.log('App', 'start address:', window.location.href);
     var isMSX = !!(window.TVXHost || window.TVXManager);
     var isTizen = navigator.userAgent.toLowerCase().indexOf('tizen') !== -1;
@@ -16609,12 +16610,12 @@
     if (!Utils.isDebug()) {
       Lampa.Storage.set('online_mod_proxy_rezka2', 'false');
       Lampa.Storage.set('online_mod_proxy_kinobase', 'false');
-      Lampa.Storage.set('online_mod_proxy_collaps', 'false');
       Lampa.Storage.set('online_mod_proxy_cdnmovies', 'false');
       Lampa.Storage.set('online_mod_proxy_fanserials', 'false');
       Lampa.Storage.set('online_mod_proxy_redheadsound', 'false');
     }
 
+    Lampa.Storage.set('online_mod_proxy_collaps', 'true');
     Lampa.Storage.set('online_mod_proxy_videocdn', 'false');
     Lampa.Storage.set('online_mod_proxy_videodb', 'false');
     Lampa.Storage.set('online_mod_proxy_zetflix', 'false');
