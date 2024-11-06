@@ -103,4 +103,8 @@ if [[ $(curl -is -H "$USER_AGENT" -k -4s --max-time 90 --retry-delay 3 --retry 5
 else
     echo "$(date +"%d.%m.%y %H:%M:%S"): Скрипт ${NAME_SCRIPT} недоступен. Не скачиваем его на GitHub,оставляем старый\!"
 fi
+
+# Условие проверяет не пусты ли сами файлы. Дело в том, что файл может существовать на удаленном сервере, но может быть пустым от такого первое if не спасает. Если такой будет, то делаем git restore , чтобы не закоммить в git пустой файл.
+for filename in {tracks,online_mod.js,e.js,o.js,rating.js,tmdb-proxy,ts-preload.js,tricks.js,tv.js}; do if [[ -s ${PATH_DOWNLOAD}${filename} ]]; then echo "No empty $filename";else echo -e "\e[1;33mEmpty\033[0m $filename" && git restore ./$filename; fi; done
+
 exit 0
