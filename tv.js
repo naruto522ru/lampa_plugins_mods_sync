@@ -373,6 +373,11 @@ function keydown(e) {
 		} else if (code >= 96 && code <= 105) { // numpad
 			isStopEvent = channelSwitch(code - 96);
 		}
+		//29460 - Samsung orsay
+		if (code === 38 || code === 29460) { // Controller.move('up')
+			// this.selectGroup();
+			// isStopEvent = true;
+		}
 		if (isStopEvent) {
 			e.event.preventDefault();
 			e.event.stopPropagation();
@@ -941,7 +946,7 @@ function pluginPage(object) {
 					});
 					video['playlist'] = playlistForExtrnalPlayer;
 					Lampa.Keypad.listener.destroy()
-					Lampa.Keypad.listener.follow('keydown', keydown);
+					Lampa.Keypad.listener.follow('keydown', keydown.bind(_this2));
 					Lampa.Player.runas && Lampa.Player.runas(Lampa.Storage.field('player_iptv'));
 					Lampa.Player.play(video);
 					Lampa.Player.runas && Lampa.Player.runas(Lampa.Storage.field('player_iptv'));
@@ -1413,11 +1418,11 @@ function pluginPage(object) {
 					activity.currentGroup = group.key;
 					Lampa.Activity.replace(activity);
 				} else {
-					Lampa.Controller.toggle('content');
+					Lampa.Player.opened() || Lampa.Controller.toggle('content');
 				}
 			},
 			onBack: function() {
-				Lampa.Controller.toggle('content');
+				Lampa.Player.opened() || Lampa.Controller.toggle('content');
 			}
 		});
 	};
