@@ -17940,7 +17940,8 @@
 
 
     function rezka2Login(success, error) {
-      var url = Utils.rezka2Mirror() + '/ajax/login/';
+      var host = Utils.rezka2Mirror();
+      var url = host + '/ajax/login/';
       var postdata = 'login_name=' + encodeURIComponent(Lampa.Storage.get('online_mod_rezka2_name', ''));
       postdata += '&login_password=' + encodeURIComponent(Lampa.Storage.get('online_mod_rezka2_password', ''));
       postdata += '&login_not_save=0';
@@ -17949,7 +17950,15 @@
       network.silent(url, function (json) {
         if (json && (json.success || json.message == 'Уже авторизован на сайте. Необходимо обновить страницу!')) {
           Lampa.Storage.set("online_mod_rezka2_status", 'true');
-          if (success) success();
+          network.clear();
+          network.timeout(8000);
+          network.silent(host + '/', function (json) {
+            if (success) success();
+          }, function (a, c) {
+            if (success) success();
+          }, false, {
+            withCredentials: true
+          });
         } else {
           Lampa.Storage.set("online_mod_rezka2_status", 'false');
           if (json && json.message) Lampa.Noty.show(json.message);
