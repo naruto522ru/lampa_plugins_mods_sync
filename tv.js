@@ -1,8 +1,3 @@
-/*
-// https://ss-iptv.com/ru/operators/catchup
-// niklabs.com/catchup-settings/
-// http://plwxk8hl.russtv.net/iptv/00000000000000/9201/index.m3u8?utc=1666796400&lutc=1666826200
-*/
 ;(function () {
 'use strict';
 var plugin = {
