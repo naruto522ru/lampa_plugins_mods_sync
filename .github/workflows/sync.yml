@@ -68,7 +68,7 @@ jobs:
 
     - name: Install CoreDNS
       env:
-        URL_CONFIG_COREDNS: https://gist.githubusercontent.com/naruto522ru/e244f9f6fe96a609b8d9cf2f1f478bdf/raw/51ece1c11022cd9604206bff94698316567a4881/CoreDNS_config.conf
+        URL_CONFIG_COREDNS: https://gist.githubusercontent.com/you-oops-dev/e244f9f6fe96a609b8d9cf2f1f478bdf/raw/51ece1c11022cd9604206bff94698316567a4881/CoreDNS_config.conf
       run: |
        sudo chmod -c 755 /usr/local/bin/coredns && sudo chown -c root:root /usr/local/bin/coredns
        whereis coredns
